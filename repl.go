@@ -5,10 +5,21 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/joaquinbian/pokedex-go/internal/pokeapi"
 )
+
+type config struct {
+	prevUrl string
+	nextUrl string
+}
 
 func startRepl() {
 	scanner := bufio.NewScanner(os.Stdin)
+	var cfg = config{
+		nextUrl: pokeapi.LocationAreasUrl,
+		prevUrl: pokeapi.LocationAreasUrl,
+	}
 	for {
 		fmt.Print("Pokedex > ")
 		if scanner.Scan() {
@@ -21,7 +32,7 @@ func startRepl() {
 					continue
 				}
 
-				err := c.callback()
+				err := c.callback(&cfg)
 
 				if err != nil {
 					fmt.Errorf("Error executing %v command: %w", c.name, err)
