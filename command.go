@@ -35,7 +35,7 @@ func init() {
 		"mapb": {
 			name:        "mapb",
 			description: "Displays the previous Location Areas",
-			callback:    commandMap,
+			callback:    commandMapb,
 		},
 	}
 }
