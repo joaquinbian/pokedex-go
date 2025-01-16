@@ -69,20 +69,18 @@ func commandMap(cfg *config) error {
 		fmt.Println(l.Name)
 	}
 
-	if res.Next != nil {
+	cfg.nextUrl = res.Next
 
-		cfg.nextUrl = *res.Next
-	}
-
-	if res.Previous != nil {
-
-		cfg.prevUrl = *res.Previous
-	}
+	cfg.prevUrl = res.Previous
 
 	return nil
 
 }
 func commandMapb(cfg *config) error {
+
+	if cfg.prevUrl == nil {
+		return fmt.Errorf("You are on the first page!\n")
+	}
 
 	res, err := pokeapi.GetLocationAreas(cfg.prevUrl)
 
@@ -94,15 +92,9 @@ func commandMapb(cfg *config) error {
 		fmt.Println(l.Name)
 	}
 
-	if res.Next != nil {
+	cfg.nextUrl = res.Next
 
-		cfg.nextUrl = *res.Next
-	}
-
-	if res.Previous != nil {
-
-		cfg.prevUrl = *res.Previous
-	}
+	cfg.prevUrl = res.Previous
 
 	return nil
 

@@ -7,8 +7,6 @@ import (
 	"net/http"
 )
 
-const LocationAreasUrl string = "https://pokeapi.co/api/v2/location-area"
-
 type LocationAreaResponse struct {
 	Count    int            `json:"count"`
 	Next     *string        `json:"next"`
@@ -21,8 +19,15 @@ type LocationArea struct {
 	URL  string `json:"url"`
 }
 
-func GetLocationAreas(url string) (LocationAreaResponse, error) {
-	res, err := http.Get(url)
+func GetLocationAreas(pageUrl *string) (LocationAreaResponse, error) {
+	//para la primera vez
+	baseUrl := BaseUrl + LocationAreas
+
+	if pageUrl != nil {
+		baseUrl = *pageUrl
+	}
+
+	res, err := http.Get(baseUrl)
 
 	if err != nil {
 		return LocationAreaResponse{}, fmt.Errorf("Error getting location areas: %w", err)
