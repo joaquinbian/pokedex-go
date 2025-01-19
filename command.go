@@ -5,6 +5,7 @@ import (
 	"os"
 
 	locationArea "github.com/joaquinbian/pokedex-go/internal/pokeapi/location_area"
+	locationAreaDetail "github.com/joaquinbian/pokedex-go/internal/pokeapi/location_area_detail"
 )
 
 type cliCommand struct {
@@ -107,5 +108,15 @@ func commandMapb(cfg *config, args []string) error {
 
 func commandExplore(cfg *config, args []string) error {
 	//fmt.Printf("args en explore: %v\n", args)
+
+	res, err := locationAreaDetail.GetLocationAreasDetail(args[0])
+
+	if err != nil {
+		return fmt.Errorf("error commandExplore: %w", err)
+	}
+
+	for _, item := range res.PokemonEncounters {
+		fmt.Printf("  - %v\n", item.Pokemon.Name)
+	}
 	return nil
 }
