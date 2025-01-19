@@ -28,16 +28,16 @@ func startRepl() {
 	for {
 		fmt.Print("Pokedex > ")
 		if scanner.Scan() {
-			text := cleanInput(scanner.Text())
-			if len(text) > 0 {
+			stdin := cleanInput(scanner.Text())
+			if len(stdin) > 0 {
 
-				c, ok := commands[text[0]]
+				c, ok := commands[stdin[0]]
 				if !ok {
 					fmt.Print("Unknown command\n")
 					continue
 				}
 
-				err := c.callback(&cfg)
+				err := c.callback(&cfg, stdin[1:])
 
 				if err != nil {
 					fmt.Print(err)
