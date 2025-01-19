@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/joaquinbian/pokedex-go/internal/pokeapi"
+	locationArea "github.com/joaquinbian/pokedex-go/internal/pokeapi/location_area"
 )
 
 type cliCommand struct {
@@ -64,7 +64,7 @@ func commandExit(cfg *config, args []string) error {
 
 func commandMap(cfg *config, args []string) error {
 
-	res, err := pokeapi.GetLocationAreas(cfg.nextUrl, cfg.cache)
+	res, err := locationArea.GetLocationAreas(cfg.nextUrl, cfg.cache)
 
 	if err != nil {
 		return fmt.Errorf("Error mapCommand: %w", err)
@@ -87,7 +87,7 @@ func commandMapb(cfg *config, args []string) error {
 		return fmt.Errorf("You are on the first page!\n")
 	}
 
-	res, err := pokeapi.GetLocationAreas(cfg.prevUrl, cfg.cache)
+	res, err := locationArea.GetLocationAreas(cfg.prevUrl, cfg.cache)
 
 	if err != nil {
 		return fmt.Errorf("Error mapCommand: %w", err)
