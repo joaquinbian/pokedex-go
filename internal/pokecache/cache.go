@@ -52,7 +52,9 @@ func (c Cache) Get(key string) ([]byte, bool) {
 
 func (c *Cache) reapLoop() {
 	t := time.NewTicker(c.duration)
-	<-t.C
-	deleteOldEntries(c)
+	for {
+		<-t.C
+		deleteOldEntries(c)
+	}
 
 }
