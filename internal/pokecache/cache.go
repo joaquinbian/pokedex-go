@@ -1,7 +1,6 @@
 package pokecache
 
 import (
-	"fmt"
 	"sync"
 	"time"
 )
@@ -39,8 +38,6 @@ func (c Cache) Get(key string) ([]byte, bool) {
 	defer c.mu.RUnlock()
 
 	data, ok := c.data[key]
-
-	fmt.Printf("")
 
 	if !ok {
 		return []byte{}, false
