@@ -40,9 +40,7 @@ func (c Cache) Get(key string) ([]byte, bool) {
 
 	data, ok := c.data[key]
 
-	fmt.Printf("esta la data? %v\n", ok)
-
-	fmt.Printf("recuperamos la data? %v\n", data.val)
+	fmt.Printf("")
 
 	if !ok {
 		return []byte{}, false
