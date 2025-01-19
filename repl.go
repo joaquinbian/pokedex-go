@@ -5,11 +5,15 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
+	"github.com/joaquinbian/pokedex-go/internal/pokecache"
 )
 
 type config struct {
 	prevUrl *string
 	nextUrl *string
+	cache   pokecache.Cache
 }
 
 func startRepl() {
@@ -18,6 +22,7 @@ func startRepl() {
 	var cfg = config{
 		nextUrl: nil,
 		prevUrl: nil,
+		cache:   pokecache.NewCache(5 * time.Second),
 	}
 
 	for {

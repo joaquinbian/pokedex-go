@@ -59,7 +59,7 @@ func commandExit(cfg *config) error {
 
 func commandMap(cfg *config) error {
 
-	res, err := pokeapi.GetLocationAreas(cfg.nextUrl)
+	res, err := pokeapi.GetLocationAreas(cfg.nextUrl, cfg.cache)
 
 	if err != nil {
 		return fmt.Errorf("Error mapCommand: %w", err)
@@ -82,7 +82,7 @@ func commandMapb(cfg *config) error {
 		return fmt.Errorf("You are on the first page!\n")
 	}
 
-	res, err := pokeapi.GetLocationAreas(cfg.prevUrl)
+	res, err := pokeapi.GetLocationAreas(cfg.prevUrl, cfg.cache)
 
 	if err != nil {
 		return fmt.Errorf("Error mapCommand: %w", err)

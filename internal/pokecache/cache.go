@@ -1,6 +1,7 @@
 package pokecache
 
 import (
+	"fmt"
 	"sync"
 	"time"
 )
@@ -11,6 +12,7 @@ func NewCache(interval time.Duration) Cache {
 	cache := Cache{
 		mu:       rmu,
 		duration: interval,
+		data:     make(map[string]cacheEntry),
 	}
 	go cache.reapLoop()
 
@@ -26,16 +28,21 @@ func (c *Cache) Add(key string, val []byte) {
 		createdAt: time.Time{},
 		val:       val,
 	}
+
 	defer c.mu.RUnlock()
 }
 
-func (c *Cache) Get(key string) ([]byte, bool) {
+func (c Cache) Get(key string) ([]byte, bool) {
 
 	c.mu.RLock()
 
-	defer c.mu.Unlock()
+	defer c.mu.RUnlock()
 
 	data, ok := c.data[key]
+
+	fmt.Printf("esta la data? %v\n", ok)
+
+	fmt.Printf("recuperamos la data? %v\n", data.val)
 
 	if !ok {
 		return []byte{}, false
