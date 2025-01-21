@@ -11,7 +11,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(cfg *config, args []string) error
+	callback    func(cfg *config, args ...string) error
 }
 
 var commands map[string]cliCommand
@@ -46,7 +46,7 @@ func init() {
 	}
 }
 
-func commandHelp(cfg *config, args []string) error {
+func commandHelp(cfg *config, args ...string) error {
 	fmt.Print("Welcome to the Pokedex! \nUsage:")
 
 	for k, value := range commands {
@@ -57,13 +57,13 @@ func commandHelp(cfg *config, args []string) error {
 	return nil
 }
 
-func commandExit(cfg *config, args []string) error {
+func commandExit(cfg *config, args ...string) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
 }
 
-func commandMap(cfg *config, args []string) error {
+func commandMap(cfg *config, args ...string) error {
 
 	res, err := locationArea.GetLocationAreas(cfg.nextUrl, cfg.cache)
 
@@ -82,7 +82,7 @@ func commandMap(cfg *config, args []string) error {
 	return nil
 
 }
-func commandMapb(cfg *config, args []string) error {
+func commandMapb(cfg *config, args ...string) error {
 
 	if cfg.prevUrl == nil {
 		return fmt.Errorf("You are on the first page!\n")
@@ -106,7 +106,7 @@ func commandMapb(cfg *config, args []string) error {
 
 }
 
-func commandExplore(cfg *config, args []string) error {
+func commandExplore(cfg *config, args ...string) error {
 	//fmt.Printf("args en explore: %v\n", args)
 
 	res, err := locationAreaDetail.GetLocationAreasDetail(args[0], cfg.cache)
@@ -115,6 +115,8 @@ func commandExplore(cfg *config, args []string) error {
 		return fmt.Errorf("error commandExplore: %w\n", err)
 	}
 
+	fmt.Println("Exploring " + args[0] + "...")
+	fmt.Println("Pokemons found:")
 	for _, item := range res.PokemonEncounters {
 		fmt.Printf("  - %v\n", item.Pokemon.Name)
 	}

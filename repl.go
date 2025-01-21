@@ -37,7 +37,7 @@ func startRepl() {
 					continue
 				}
 
-				err := c.callback(&cfg, stdin[1:])
+				err := c.callback(&cfg, stdin[1:]...)
 
 				if err != nil {
 					fmt.Print(err)
