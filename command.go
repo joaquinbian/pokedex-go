@@ -109,10 +109,10 @@ func commandMapb(cfg *config, args []string) error {
 func commandExplore(cfg *config, args []string) error {
 	//fmt.Printf("args en explore: %v\n", args)
 
-	res, err := locationAreaDetail.GetLocationAreasDetail(args[0])
+	res, err := locationAreaDetail.GetLocationAreasDetail(args[0], cfg.cache)
 
 	if err != nil {
-		return fmt.Errorf("error commandExplore: %w", err)
+		return fmt.Errorf("error commandExplore: %w\n", err)
 	}
 
 	for _, item := range res.PokemonEncounters {
