@@ -4,6 +4,5 @@
 ### TO-DO
 
 - explore command:
-    - add cache 
-    - handle error when id/name is not found
+    - handle error when id/name is not found (done, puede mejorar)
     - move removeOldEntries fn outside utils.go
