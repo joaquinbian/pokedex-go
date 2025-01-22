@@ -6,6 +6,7 @@ import (
 
 	locationArea "github.com/joaquinbian/pokedex-go/internal/pokeapi/location_area"
 	locationAreaDetail "github.com/joaquinbian/pokedex-go/internal/pokeapi/location_area_detail"
+	pokemon "github.com/joaquinbian/pokedex-go/internal/pokeapi/pokemon"
 )
 
 type cliCommand struct {
@@ -42,6 +43,11 @@ func init() {
 			name:        "explore",
 			description: "Shows a list of pokemons located at a given location area",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Catches a pokemon",
+			callback:    commandCatch,
 		},
 	}
 }
@@ -109,16 +115,40 @@ func commandMapb(cfg *config, args ...string) error {
 func commandExplore(cfg *config, args ...string) error {
 	//fmt.Printf("args en explore: %v\n", args)
 
-	res, err := locationAreaDetail.GetLocationAreasDetail(args[0], cfg.cache)
+	cityName := args[0]
+	res, err := locationAreaDetail.GetLocationAreasDetail(cityName, cfg.cache)
 
 	if err != nil {
 		return fmt.Errorf("error commandExplore: %w\n", err)
 	}
 
-	fmt.Println("Exploring " + args[0] + "...")
+	fmt.Println("Exploring " + cityName + "...")
 	fmt.Println("Pokemons found:")
 	for _, item := range res.PokemonEncounters {
 		fmt.Printf("  - %v\n", item.Pokemon.Name)
+	}
+	return nil
+}
+
+func commandCatch(cfg *config, args ...string) error {
+
+	pokeName := args[0]
+
+	fmt.Println("Throwing a Pokeball at " + pokeName)
+
+	res, err := pokemon.GetPokemon(pokeName)
+
+	if err != nil {
+		return fmt.Errorf("Error command catch: %w", err)
+	}
+
+	pokeBaseExp := res.BaseExperience
+
+	if wasPokemonCaught(pokeBaseExp) {
+		fmt.Println(pokeName + " was caught!")
+	} else {
+		fmt.Println(pokeName + " escaped...")
+
 	}
 	return nil
 }
