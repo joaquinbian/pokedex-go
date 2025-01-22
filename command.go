@@ -134,7 +134,7 @@ func commandCatch(cfg *config, args ...string) error {
 
 	pokeName := args[0]
 
-	fmt.Println("Throwing a Pokeball at " + pokeName)
+	fmt.Println("Throwing a Pokeball at " + pokeName + "...")
 
 	_, ok := cfg.pokedex.Get(pokeName)
 
