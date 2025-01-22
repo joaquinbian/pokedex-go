@@ -136,6 +136,14 @@ func commandCatch(cfg *config, args ...string) error {
 
 	fmt.Println("Throwing a Pokeball at " + pokeName)
 
+	_, ok := cfg.pokedex.Get(pokeName)
+
+	if ok {
+		fmt.Printf("%v was already cached!\n", pokeName)
+
+		return nil
+	}
+
 	res, err := pokemon.GetPokemon(pokeName)
 
 	if err != nil {
@@ -145,7 +153,10 @@ func commandCatch(cfg *config, args ...string) error {
 	pokeBaseExp := res.BaseExperience
 
 	if wasPokemonCaught(pokeBaseExp) {
-		fmt.Println(pokeName + " was caught!")
+		fmt.Println(pokeName + " was caught!\n")
+
+		cfg.pokedex.Add(pokeName, res)
+
 	} else {
 		fmt.Println(pokeName + " escaped...")
 

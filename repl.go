@@ -8,12 +8,15 @@ import (
 	"time"
 
 	"github.com/joaquinbian/pokedex-go/internal/pokecache"
+	"github.com/joaquinbian/pokedex-go/internal/pokedex"
 )
 
 type config struct {
 	prevUrl *string
 	nextUrl *string
 	cache   pokecache.Cache
+
+	pokedex pokedex.Pokedex
 }
 
 func startRepl() {
@@ -23,6 +26,7 @@ func startRepl() {
 		nextUrl: nil,
 		prevUrl: nil,
 		cache:   pokecache.NewCache(5 * time.Second),
+		pokedex: pokedex.NewPokedex(),
 	}
 
 	for {

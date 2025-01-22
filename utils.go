@@ -9,6 +9,6 @@ func getChanceOfSuccess(n int) int {
 }
 
 func wasPokemonCaught(exp int) bool {
-	p := getChanceOfSuccess(rand.Intn(4))
+	p := getChanceOfSuccess(rand.Intn(exp))
 	return p >= 90
 }
