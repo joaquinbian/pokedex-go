@@ -21,33 +21,37 @@ func init() {
 	commands = map[string]cliCommand{
 		"exit": {
 			name:        "exit",
-			description: "Exit the Pokedex",
+			description: "Use exit to exit the Pokedex",
 			callback:    commandExit,
 		},
 		"help": {
 			name:        "help",
-			description: "Displays a help message",
+			description: "this is the command you just ran",
 			callback:    commandHelp,
 		},
 		"map": {
 			name:        "map",
-			description: "Displays the next Location Areas",
+			description: "Use map to display the next Location Areas",
 			callback:    commandMap,
 		},
 		"mapb": {
 			name:        "mapb",
-			description: "Displays the previous Location Areas",
+			description: "Use mapb to display the previous Location Areas",
 			callback:    commandMapb,
 		},
 		"explore": {
 			name:        "explore",
-			description: "Shows a list of pokemons located at a given location area",
+			description: "Use explore to see a list of pokemons located at a given location area",
 			callback:    commandExplore,
 		},
 		"catch": {
 			name:        "catch",
-			description: "Catches a pokemon",
+			description: "Use catch to... catch a pokemon",
 			callback:    commandCatch,
+		}, "inspect": {
+			name:        "inspect",
+			description: "Use inspect to see information about a pokemon",
+			callback:    commandInspect,
 		},
 	}
 }
@@ -161,5 +165,16 @@ func commandCatch(cfg *config, args ...string) error {
 		fmt.Println(pokeName + " escaped...")
 
 	}
+	return nil
+}
+
+func commandInspect(cfg *config, args ...string) error {
+
+	pokeName := args[0]
+
+	if err := cfg.pokedex.ShowPokemonInfo(pokeName); err != nil {
+		return fmt.Errorf("Error inspect command: %w", err)
+	}
+
 	return nil
 }

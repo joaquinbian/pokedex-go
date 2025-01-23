@@ -16,7 +16,7 @@ func GetPokemon(id string) (PokemonDetailsResponse, error) {
 	res, err := http.Get(url)
 
 	if err != nil {
-		return PokemonDetailsResponse{}, fmt.Errorf("Error fetching pokemon: %w", err)
+		return PokemonDetailsResponse{}, fmt.Errorf("Error fetching pokemon: %w\n", err)
 	}
 	defer res.Body.Close()
 
@@ -24,7 +24,7 @@ func GetPokemon(id string) (PokemonDetailsResponse, error) {
 
 	var pokemonDetailResponse PokemonDetailsResponse
 	if err := json.Unmarshal(data, &pokemonDetailResponse); err != nil {
-		return PokemonDetailsResponse{}, fmt.Errorf("Error parsing pokemon: %w", err)
+		return PokemonDetailsResponse{}, fmt.Errorf("Error parsing pokemon: %w\n", err)
 
 	}
 

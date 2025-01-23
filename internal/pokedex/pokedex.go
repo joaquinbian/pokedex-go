@@ -1,6 +1,7 @@
 package pokedex
 
 import (
+	"fmt"
 	"sync"
 
 	pokemon "github.com/joaquinbian/pokedex-go/internal/pokeapi/pokemon"
@@ -40,4 +41,32 @@ func (p Pokedex) Get(name string) (pokemon.PokemonDetailsResponse, bool) {
 
 	return poke, true
 
+}
+
+func (p Pokedex) ShowPokemonInfo(name string) error {
+	p.mu.RLock()
+
+	defer p.mu.RUnlock()
+
+	pokemon, ok := p.pokemons[name]
+
+	if !ok {
+		return fmt.Errorf("Pokemon %v was not found! Try another one\n", name)
+	}
+
+	fmt.Printf("Name: %v\n", pokemon.Name)
+	fmt.Printf("Height: %v\n", pokemon.Height)
+	fmt.Printf("Weight: %v\n", pokemon.Weight)
+	fmt.Println("Stats:")
+	for _, v := range pokemon.Stats {
+		fmt.Printf(" -%v: %v\n", v.Stat.Name, v.BaseStat)
+	}
+	fmt.Println("Types:")
+	for _, v := range pokemon.Types {
+		fmt.Printf(" -%v\n", v.Type.Name)
+	}
+
+	fmt.Println("")
+
+	return nil
 }
