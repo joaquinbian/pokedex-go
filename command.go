@@ -48,10 +48,16 @@ func init() {
 			name:        "catch",
 			description: "Use catch to... catch a pokemon",
 			callback:    commandCatch,
-		}, "inspect": {
+		},
+		"inspect": {
 			name:        "inspect",
 			description: "Use inspect to see information about a pokemon",
 			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Use pokedex to see a list of all the pokemons catched",
+			callback:    commandPokedex,
 		},
 	}
 }
@@ -175,6 +181,12 @@ func commandInspect(cfg *config, args ...string) error {
 	if err := cfg.pokedex.ShowPokemonInfo(pokeName); err != nil {
 		return fmt.Errorf("Error inspect command: %w", err)
 	}
+
+	return nil
+}
+
+func commandPokedex(cfg *config, args ...string) error {
+	cfg.pokedex.ShowPokedex()
 
 	return nil
 }

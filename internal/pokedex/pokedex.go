@@ -70,3 +70,21 @@ func (p Pokedex) ShowPokemonInfo(name string) error {
 
 	return nil
 }
+
+func (p Pokedex) ShowPokedex() {
+	p.mu.RLock()
+
+	defer p.mu.RUnlock()
+
+	if len(p.pokemons) < 1 {
+		fmt.Println("Your pokedex is empty :( Go and catch some pokemons!")
+		return
+	}
+
+	fmt.Println("Your pokedex:")
+
+	for k := range p.pokemons {
+		fmt.Printf(" - %v\n", k)
+	}
+	fmt.Println()
+}
